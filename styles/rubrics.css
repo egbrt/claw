@@ -1,0 +1,27 @@
+#preview Term.organism {
+    font-style: italic;
+}
+
+#preview Fragment:after {
+    content: " ";
+}
+
+#preview [usage="etiology"]:after {
+    content: "†";
+}
+
+#preview [usage="manifestation"]:after {
+    content: "*";
+}
+
+#preview Fragment[usage="etiology"]:after {
+    content: "† ";
+}
+
+#preview Fragment[usage="manifestation"]:after {
+    content: "* ";
+}
+
+#preview Para.heading {
+    font-weight: bold;
+}

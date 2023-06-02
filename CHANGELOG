@@ -1,0 +1,66 @@
+2023-03-27, version 1.90
+-copyright bumped to 2023
+-changed layout on export page
+-added option to strip tags on export page (instead of default stripping)
+-improved anonymous user browser experience
+-import rubrics in CSV format
+-includes export of changelog in HTML format
+-improved use of workbench as browser
+-all rubrics of a deleted rubric kind are deleted
+-rubrics with a rubric kind starting with a '.' are hidden from browser view
+-optionally export ClaML with or without hidden rubrics
+-included javascript class to optionally hide rubrics
+-switched from ihtsdo to own snomed browser
+-only admin can edit rubrics at Root
+-improved user management
+-replaced jstree with own version
+-optionally add comments to a category
+
+2022-10-06, version 1.60.03
+-show alert when clicked on an external Reference with an unknown scheme attribute
+-show alert when clicked in an internal Reference to a non-existent code
+
+2022-09-21, version 1.60.02
+-bugfix: menu did not open when creating new database
+
+2022-09-08, version 1.60.01
+-bugfix: in export with concatenation of rubrics for cases where code is numerical
+
+2022-07-27, version 1.60
+-added browser for users with reader rights
+-bugfix: checked user rights on each separate page
+
+2022-04-07, version 1.57
+-new options in export
+-new options in translate
+-fixed bugs in deleteClass
+-added author information at Root
+-bugfixes wrt author
+-use ?dbase= to directly select dbase in login screen
+-adding a new user sends email to new user
+-reset password of user sends email
+-when adding an already present subclass, the subclass is added as last child
+-reset password re-implemented
+-bugfix: wrt changelog of rubrics
+-bugfix: in changelog
+
+2022-01-30, version 1.40
+-changed underlying code to OOP
+-added option to sort subs of a class
+
+2021-10-29, verson 1.30
+-added option to import an existing changelog into a newly loaded database
+
+2021-05-07, version 1.20
+-added option to concatenate rubrics of same kind in export
+-added title and charset (utf-8) to html export
+-order of subclasses equals order in source ClaML
+
+2021-04-14, version 1.10 
+-export of (extended) statistical information of classification
+-removed sending of email when creating new user
+-cleaned up the source code a little
+-minor bug fixes
+
+2021-04-01, version 1.0
+-first release of Classification Workbench as open source

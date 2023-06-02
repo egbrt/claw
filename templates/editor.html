@@ -1,0 +1,37 @@
+<input type="text" id="searchText" name="searchText" autofocus="true" />
+
+<div id="viewerOptions">
+    <ul>
+        <li id="buttonEditor" class="buttonViewer" selected="true">Editor</li>
+        <li id="buttonPreview" class="buttonViewer">Preview</li>
+        <li id="buttonComments" class="buttonViewer">Notes <span id="commentsPresent" class="blink"> !!! </span></li>
+    </ul>
+</div>
+
+<button id="buttonFollower">Start original browser</button>
+<button id="backToRoot">R O O T</button>
+<div id="treeview" class="treeview"></div>
+
+<div id="editor" class="rubrics">
+    <textarea id="textEditor"></textarea>
+    <button id="saveChangedRubrics" hidden=hidden>Save changes</button> 
+    <span id="errorInRubrics"></span><br/>
+</div>
+<div id="preview" class="rubrics"></div>
+<div id="comments" class="rubrics">
+    <div id="allComments"></div>
+    <textarea id="commentsEditor"></textarea>
+    <button id="saveComments" hidden=hidden>Save comments</button> 
+</div>
+
+<div id="lastChange"></div>
+
+<script>
+    $("#backToRoot").hide();
+    $("#allowedCKinds").hide();
+    $("#allowedForRoot").hide();
+    $("#allowedForAll").hide();
+    $("#subCommands").hide();
+    $("#buttonEditor").focus();
+</script>
+

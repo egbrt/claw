@@ -1,0 +1,5 @@
+- the 'original browser' (buttonFollower in editor.php) is hard-coded for ICPC-3.
+  This should be configurable.
+
+- use table 'schemes' to rewrite references as buttons to external classification schemes
+  now: hard-coded in scheme.js

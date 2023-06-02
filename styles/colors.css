@@ -1,0 +1,11 @@
+.infection {color: darkkhaki}     /* #bsb76b */
+.symptom {color: darkgreen}       /* #006400 */
+.clinicalFinding {color:seagreen} /* #2e8b57 */
+.complaint {color:springgreen}    /* #00ff7f */
+.neoplasm {color: lightskyblue}   /* #87cefa */
+.trauma {color: hotpink}          /* #ff69b4, voorheen: .injury {color:#cc0099} */
+.injury {color:hotpink};          /* for icpc-2 browser */
+.congenital {color: blue}         /* #0000ff */
+.otherDiagnosis {color: crimson}  /* #dc143c */
+.process {color: royalblue}       /* #4169e1 */
+
