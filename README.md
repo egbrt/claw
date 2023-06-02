@@ -1,4 +1,4 @@
-        --- Classification Workbench ---
+# Classification Workbench
 
 The Classification Workbench is a web application to support 
 the development and maintenance of classifications. It supports 
@@ -10,7 +10,7 @@ https://www.iso.org/standard/52952.html
 For detailed installation instructions see the file INSTALL.
 
 
-        --- Contact Information ---
+# Contact Information
         
 If you have any questions regarding the Classification Workbench, please contact:
     claw@icpc-3.info.
