@@ -51,7 +51,7 @@ else {
     echo "<h3>Sponsors</h3>";
     echo "<p>The work was sponsored by: <a href=\"https://icpc-3.info\" target=\"blank\">The WONCA ICPC Foundation</a></p>";
     echo "<h3>Source code</h3>";
-    echo "<p><a href=\"https://github.com/egbrt/claw\">Download</a> the source for the Classification Workbench.</p>";
+    echo "<p><a href=\"https://github.com/egbrt/claw\" target=\"_blank\">Download</a> the source for the Classification Workbench.</p>";
     echo "<p>If you need support installing the source or wish to contribute to the development of the Classification Workbench, send an email to: ";
     echo "<a href=\"mailto:claw@icpc-3.info\">claw at icpc-3.info<a></p>";
     echo "</div>";
