@@ -52,6 +52,10 @@ export default class Scheme {
                 this.isOtherClaW = true;
                 this.msecs2Wait1Time = 2000;
             }
+            else if (this.name == "orphanet") {
+                this.url = "https://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=EN&Expert=" + this.code;
+                this.isKnownScheme = true;
+            }
         }
     }
 }
