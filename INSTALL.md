@@ -6,7 +6,7 @@ One or more MySQL databases.
 The Classification Workbench uses on one jquery, check templates/header.php for the currently used version of this software.
 Download the relevant files from:
     https://jquery.com
-The file jquery-<version>.js should be placed in the 'scripts' directory.
+The file jquery-...js should be placed in the 'scripts' directory.
 
 
 # Initial Setup
