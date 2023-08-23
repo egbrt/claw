@@ -239,9 +239,11 @@ class Database {
     
     function changeNodeCode($id, $code)
     {
-        $node = $this->nodes->get($id);
-        $this->nodes->changeCode($id, $code);
-        $this->changes->write($code, 'Code changed', $node->code, $code);
+        if ($code != "") {
+            $node = $this->nodes->get($id);
+            $this->nodes->changeCode($id, $code);
+            $this->changes->write($code, 'Code changed', $node->code, $code);
+        }
     }
 
     function changeNodeKind($id, $ckind)
