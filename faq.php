@@ -131,23 +131,25 @@ if (isAuthenticated($con, $user, $name, $role)) {
         <ul id="addClass" style="display:none">
             <li>Select the parent class for the new class</li>
             <li>Click <em>_subclass</em> in the upper-right menu</li>
+            <li>Click <em>add</em> in the upper-right menu</li>
             <li>Type the code for the new subclass</li>
             <li>Click the button <em>Save changes</em></li>
         </ul>
         
         <h4 class="switch" for="removeClass">How to remove a class</h4>
         <ul id="removeClass" style="display:none">
-            <li>Select the class to be removed</li>
-            <li>Click <em>_code</em> in the upper-right menu</li>
-            <li>Click <em>_code := DELETE</em> in the upper-right menu</li>
+            <li>Select the parent of the class to be removed</li>
+            <li>Click <em>_subcode</em> in the upper-right menu</li>
+            <li>Click <em>delete</em> in the upper-right menu</li>
+            <li>Enter the code of the class that should be removed</li>
             <li>Click the button <em>Save changes</em></li>
         </ul>
         
         <h4 class="switch" for="sortClasses">How to sort sub-classes</h4>
         <ul id="sortClasses" style="display:none">
             <li>Select the class for which the sub-classes should be sorted</li>
-            <li>Click <em>_code</em> in the upper-right menu</li>
-            <li>Click <em>_code := SORTSUBS</em> in the upper-right menu</li>
+            <li>Click <em>_subcode</em> in the upper-right menu</li>
+            <li>Click <em>sort</em> in the upper-right menu</li>
             <li>Click the button <em>Save changes</em></li>
         </ul>
 
