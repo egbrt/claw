@@ -203,7 +203,7 @@ function downloadWordList($db, &$filename)
     $file = fopen($filename, 'w');
     if ($file) {
         if ($rows = $db->rubrics->getAll()) {
-            $seen= array();
+            $seen = array();
             $delimitors = " []\t()-,\"<>;:.?!'’/\\";
             foreach ($rows as $row) {
                 $label = removeReferences($row['label']);
@@ -216,12 +216,6 @@ function downloadWordList($db, &$filename)
                     elseif (is_numeric($word[0])) {
                         // ignore word starting with number
                     }
-                    elseif (is_numeric($word)) {
-                        // ignore numbers
-                    }
-                    elseif ($db->nodes->find($word)) {
-                        // ignore codes
-                    }
                     elseif (array_key_exists($word, $seen)) {
                         $seen[$word] += 1;
                     }
@@ -231,36 +225,30 @@ function downloadWordList($db, &$filename)
                     $word = strtok($delimitors);
                 }
             }
+            
+            foreach ($seen as $word => $number) {
+                fwrite($file, "\"" . $word);
+                fwrite($file, "\"," . $number);
+                //fwrite($file, "\",\"" . $db->nodes->get($row['class'])->code); 
+                fwrite($file, "\n");
+            }
         }
         
-        foreach ($seen as $word => $number) {
-            fwrite($file, "\"" . $word);
-            fwrite($file, "\"," . $number);
-            //fwrite($file, "\",\"" . $db->nodes->get($row['class'])->code); 
-            fwrite($file, "\n");
-        }
-
         fclose($file);
     }
 }
 
 
+// references are always? at end of text, so just cut-off there
 function removeReferences($label)
 {
-    $words = explode(" ", strtolower($label));
-    $label = '';
-    $keep = true;
-    foreach ($words as $word) {
-        if (substr($word, 0, 10) == "<reference") {
-            $keep = false;
-        }
-        elseif (!$keep) {
-            $keep = (substr($word, 0, 12) == "</reference>");
-        }
-        else {
-            if ($label != '') $label .= ' ';
-            $label .= $word;
-        }
+    $label = strtolower($label);
+    $i = stripos($label, "<reference");
+    if ($i === 0) {
+        $label = "";
+    }
+    elseif ($i) {
+        $label = substr($label, 0, $i-1);
     }
     return $label;
 }
