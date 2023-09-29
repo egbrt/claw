@@ -110,6 +110,7 @@ function showEditors()
     echo "<button type=\"submit\" name=\"rkind_button\" id=\"rkind_add\" value=\"add\" disabled>Add</button>";
     echo "<button type=\"submit\" name=\"rkind_button\" id=\"rkind_change\" value=\"change\" disabled>Change</button>";
     echo "<button type=\"submit\" name=\"rkind_button\" id=\"rkind_delete\" value=\"delete\" disabled>Delete</button>";
+    echo "<p>Note: Start <em>Name</em> with . to create hidden rubrics.</p>";
     echo "</form></div>";
 }
 ?>
