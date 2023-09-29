@@ -17,7 +17,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
 class Downloader {
     public $errors;
     public $claml;
@@ -35,6 +34,7 @@ class Downloader {
         $this->getCore = false;
         $this->getExtensions = false;
         $this->includeHiddenRubrics = false;
+        $this->hiddenRubrics = array();
     }
 
 
@@ -67,6 +67,7 @@ class Downloader {
     
     function writeChangeLog($db)
     {
+        $this->getHiddenRubrics($db);
         $db->getScheme($title, $date, $version, $subversion, $authors);
         $this->changelog = './downloads/changelog_' . $title . '_' . $version . '_' . $subversion . '.csv';
         if (file_exists($this->changelog)) {
@@ -77,14 +78,16 @@ class Downloader {
             if ($rows = $db->changes->selectInOrder()) {
                 fwrite($file, "\"Time\",\"Author\",\"Class\",\"What\",\"Old\",\"New\"\n");
                 foreach ($rows as $row) {
-                    fwrite($file, "\"" . $row['time'] . "\",");
-                    fwrite($file, "\"" . getShortUserName($db->con, $row['user']) . "\",");
-                    $code = '';
-                    if ($row['class'] != '') $code = $row['class'];
-                    fwrite($file, "\"" . $code . "\",");
-                    fwrite($file, "\"" . $row['what'] . "\",");
-                    fwrite($file, "\"" . $row['oldText'] . "\",");
-                    fwrite($file, "\"" . $row['newText'] . "\"\n");
+                    if ($this->includeChange($row['what'])) {
+                        fwrite($file, "\"" . $row['time'] . "\",");
+                        fwrite($file, "\"" . getShortUserName($db->con, $row['user']) . "\",");
+                        $code = '';
+                        if ($row['class'] != '') $code = $row['class'];
+                        fwrite($file, "\"" . $code . "\",");
+                        fwrite($file, "\"" . $row['what'] . "\",");
+                        fwrite($file, "\"" . $row['oldText'] . "\",");
+                        fwrite($file, "\"" . $row['newText'] . "\"\n");
+                    }
                 }
             }
             fclose($file);
@@ -118,28 +121,31 @@ class Downloader {
                 fwrite($file,"<h1>" . $title . "</h1>\n");
                 $prevCode = "";
                 $prevWhat = "";
+                $main = $this;
                 foreach ($rows as $row) {
-                    $code = '';
-                    if ($row['class'] != '') $code = $row['class'];
-                    if (strcmp($code, $prevCode) != 0) {
-                        fwrite($file,"<h2>" . $code . "</h2>\n");
-                        $prevCode = $code;
-                    }
-                    if (strcmp($row['what'], $prevWhat) != 0) {
-                        fwrite($file,"<h3>" . $row['what'] . "</h3>\n");
-                        $prevWhat = $row['what'];
-                    }
-                    if ($row['what'] == "New class") {
-                    }
-                    elseif (substr($row['what'], 0, 3) == "New") {
-                        fwrite($file,"<p>" . htmlspecialchars($row['newText']) . "</p>\n");
-                    }
-                    elseif (strpos($row['what'], "deleted")) {
-                        fwrite($file,"<p>" . htmlspecialchars($row['oldText']) . "</p>\n");
-                    }
-                    else {
-                        fwrite($file,"<p>old: " . htmlspecialchars($row['oldText']) . "<br/>\n");
-                        fwrite($file,"new: " . htmlspecialchars($row['newText']) . "</p>\n");
+                    if ($this->includeChange($row['what'])) {
+                        $code = '';
+                        if ($row['class'] != '') $code = $row['class'];
+                        if (strcmp($code, $prevCode) != 0) {
+                            fwrite($file,"<h2>" . $code . "</h2>\n");
+                            $prevCode = $code;
+                        }
+                        if (strcmp($row['what'], $prevWhat) != 0) {
+                            fwrite($file,"<h3>" . $row['what'] . "</h3>\n");
+                            $prevWhat = $row['what'];
+                        }
+                        if ($row['what'] == "New class") {
+                        }
+                        elseif (substr($row['what'], 0, 3) == "New") {
+                            fwrite($file,"<p>" . htmlspecialchars($row['newText']) . "</p>\n");
+                        }
+                        elseif (strpos($row['what'], "deleted")) {
+                            fwrite($file,"<p>" . htmlspecialchars($row['oldText']) . "</p>\n");
+                        }
+                        else {
+                            fwrite($file,"<p>old: " . htmlspecialchars($row['oldText']) . "<br/>\n");
+                            fwrite($file,"new: " . htmlspecialchars($row['newText']) . "</p>\n");
+                        }
                     }
                 }
 
@@ -150,6 +156,36 @@ class Downloader {
         }
     }
     
+    private function getHiddenRubrics($db)
+    {
+        if (!$this->includeHiddenRubrics) {
+            if ($rows = $db->rkinds->getAll()) {
+                foreach ($rows as $row) {
+                    if ($row['name'][0] == '.') {
+                        array_push($this->hiddenRubrics, substr($row['name'], 1));
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    private function includeChange($what)
+    {
+        $include = true;
+        if (!$this->includeHiddenRubrics) {
+            if ($what[0] == '.') {
+                $include = false;
+            }
+            elseif ($what != "") {
+                $rkind = "";
+                $rkind = substr($what, 0, strpos($what, ' '));
+                $include = !in_array($rkind, $this->hiddenRubrics);
+            }
+        }
+        return $include;
+    }
+
     
     private function writeTitle($file, $title, $date, $version)
     {
