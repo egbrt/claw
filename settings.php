@@ -75,8 +75,7 @@ function changeSettings($con, $user)
                 if ($newPass != "") {
                     $newPassword = true;
                     $salt = random_bytes(20);
-                    $hashedPass = crypt($newPass, $salt);
-                    $pass = $hashedPass;
+                    $pass = password_hash($newPass, PASSWORD_DEFAULT);
                 }
             }
 

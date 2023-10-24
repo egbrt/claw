@@ -81,7 +81,7 @@ function resetUser($con, $name)
             $fullName = $row['fullName'];
             $salt = random_bytes(20);
             $pass = random_bytes(20);
-            $hashedPass = crypt($pass, $salt);
+            $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
             $query = "UPDATE users SET pass='" . $hashedPass . "', salt='" . $salt . "' WHERE user=" . $user;
             if ($result = mysqli_query($con, $query)) {
                 $headers = "From: " . $EMAIL_FROM;
@@ -91,7 +91,13 @@ function resetUser($con, $name)
                 $message .= "https://" . $_SERVER['SERVER_NAME'] . "/newuser.php?dbase=" . $_SESSION['dbase'] . "&name=" . $name . "&fp=" . bin2hex($hashedPass) . "\n\n\n";
                 $message .= $EMAIL_GREETINGS;
                 $subject = $EMAIL_SUBJECT;
-                $valid = mail($email, $subject, $message, $headers);
+                if (mail($email, $subject, $message, $headers)) {
+                    $valid = true;
+                }
+                else {
+                    echo "Failed to send email<br/>";
+                    echo $headers . "<br/>Subject: " . $subject . "<br/>" . $message . "<br/>";
+                }
             }
         }
     }

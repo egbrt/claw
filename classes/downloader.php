@@ -174,12 +174,14 @@ class Downloader {
     {
         $include = true;
         if (!$this->includeHiddenRubrics) {
-            if ($what[0] == '.') {
-                $include = false;
-            }
-            elseif ($what != "") {
+            if ($what != "") {
                 $rkind = "";
-                $rkind = substr($what, 0, strpos($what, ' '));
+                if (str_starts_with($what, "New")) {
+                    $rkind = substr($what, 4);
+                }
+                else {
+                    $rkind = substr($what, 0, strpos($what, ' '));
+                }
                 $include = !in_array($rkind, $this->hiddenRubrics);
             }
         }

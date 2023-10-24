@@ -119,7 +119,7 @@ function addNewUser($con, $name, $fullName, $pass, $email, $role)
 {
     $valid = false;
     $salt = random_bytes(20);
-    $hashedPass = crypt($pass, $salt);
+    $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
     $query = "INSERT INTO users (name, pass, salt, email, role, fullName) VALUES ('" . $name . "','" . $hashedPass . "','" . $salt . "','" . $email . "','" . $role  . "','" . $fullName . "')";
     if ($result = mysqli_query($con, $query)) {
         $valid = true;

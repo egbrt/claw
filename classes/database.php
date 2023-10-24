@@ -257,20 +257,23 @@ class Database {
     function insertRubric($class, $kind, $language, $text)
     {
         $this->rubrics->insert($class, $kind, $language, $text);
+        $rkind = $this->rkinds->getName($kind);
+        if ($rkind[0] == '.') $rkind = substr($rkind, 1);
         if ($class == 0) { // i.e. root
-            $this->changes->write("Root", "New " . $this->rkinds->getName($kind), '', $language . ':' . $text);
+            $this->changes->write("Root", "New " . $rkind, '', $language . ':' . $text);
         }
         else {
             $node = $this->nodes->get($class);
-            $this->changes->write($node->code, "New " . $this->rkinds->getName($kind), '', $language . ':' . $text);
+            $this->changes->write($node->code, "New " . $rkind, '', $language . ':' . $text);
         }
     }
 
 
     function changeRubric($id, $language, $label)
     {
-        if ($this->rubrics->getCodeAndLabel($id, $code, $kind, $oldLanguage, $oldLabel)) {
-            $this->changes->write($code, $kind . " changed", $oldLanguage . ':' . $oldLabel, $language . ':' . $label);
+        if ($this->rubrics->getCodeAndLabel($id, $code, $rkind, $oldLanguage, $oldLabel)) {
+            if ($rkind[0] == '.') $rkind = substr($rkind, 1);
+            $this->changes->write($code, $rkind . " changed", $oldLanguage . ':' . $oldLabel, $language . ':' . $label);
         }
         elseif ($rows = $this->rubrics->get($id)) {
             $this->changes->write('', "changed", $rows['language'] . ':' . $rows['label'], $language . ':' . $label);
@@ -281,8 +284,9 @@ class Database {
     
     function deleteRubric($id)
     {
-        if ($this->rubrics->getCodeAndLabel($id, $code, $kind, $language, $label)) {
-            $this->changes->write($code, $kind . " deleted", $language . ':' . $label, '');
+        if ($this->rubrics->getCodeAndLabel($id, $code, $rkind, $language, $label)) {
+            if ($rkind[0] == '.') $rkind = substr($rkind, 1);
+            $this->changes->write($code, $rkind . " deleted", $language . ':' . $label, '');
         }
         elseif ($rows = $this->rubrics->get($id)) {
             $this->changes->write("", "deleted", $rows['language'] . ':' . $rows['label'], '');

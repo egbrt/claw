@@ -156,7 +156,7 @@ function addUser($con, $name, $pass, $email, $role, $fullName)
         }
         else {
             $salt = random_bytes(20);
-            $hashedPass = crypt($pass, $salt);
+            $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
             $query = "INSERT INTO users (name, pass, salt, email, role, fullName) VALUES ('" . $name . "','" . $hashedPass . "','" . $salt . "','" . $email . "','" . $role . "','" . $fullName . "')";
             if ($result = mysqli_query($con, $query)) {
                 $headers = "From: " . $EMAIL_FROM;
@@ -188,8 +188,7 @@ function changeUser($con)
                 $newPass = $_POST['userPass'];
                 if ($newPass != "") {
                     $salt = random_bytes(20);
-                    $hashedPass = crypt($newPass, $salt);
-                    $pass = $hashedPass;
+                    $pass = password_hash($newPass, PASSWORD_DEFAULT);
                 }
             }
 
@@ -245,7 +244,7 @@ function resetUser($con)
             $fullName = $row['fullName'];
             $salt = random_bytes(20);
             $pass = random_bytes(20);
-            $hashedPass = crypt($pass, $salt);
+            $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
             $query = "UPDATE users SET pass='" . $hashedPass . "', salt='" . $salt . "' WHERE user=" . $user;
             if ($result = mysqli_query($con, $query)) {
                 $headers = "From: " . $EMAIL_FROM;
@@ -257,6 +256,7 @@ function resetUser($con)
                 $subject = $EMAIL_SUBJECT;
                 if (!mail($email, $subject, $message, $headers)) {
                     echo "Failed to send email";
+                    echo $headers . "<br/>Subject: " . $subject . "<br/>" . $message . "<br/>";
                 }
                 mysqli_free_result($result);
             }

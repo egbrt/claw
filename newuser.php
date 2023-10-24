@@ -103,7 +103,7 @@ function changeSettings($con)
         $user = $_SESSION['user'];
         $name = $_SESSION['name'];
         $salt = random_bytes(20);
-        $hashedPass = crypt($_POST['userPass'], $salt);
+        $hashedPass = password_hash($_POST['userPass'], PASSWORD_DEFAULT);
         $email = $_POST['userEmail'];
         $fullName = $_POST['fullName'];
         $query = "UPDATE users SET salt='" . $salt . "',pass='" . $hashedPass ."',email='" . $email . "',fullName='" . $fullName . "' WHERE user=". $user;

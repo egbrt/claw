@@ -76,7 +76,7 @@ function showPasswordForm()
     echo "<input type=\"submit\" id=\"login\" value=\"Login\"/>";
     echo "</form>";
     
-    echo "<hr><p>Don't remember your password?<br/> Then click the link below:</p>";
+    echo "<hr><p style='color:red'><em>NB: Starting from version 2.10.00 (23-10-2023) password management has changed.<br/>You need to reset your password if this is the first time you login to this new version!</em></p><p>Don't remember your password?<br/> Then click the link below:</p>";
     $server = $_SERVER['SERVER_NAME'];
     if ($server == "localhost") $server .= "/claw";
     echo "<p><a href=\"https://" . $server . "/resetPassword.php\">Reset password</a></p>";
@@ -129,8 +129,7 @@ function isAuthenticatedUser($con, $userName, $userPass, &$user, &$name, &$role)
     $query = "SELECT * FROM users WHERE name='" . $userName . "'";
     if ($result = mysqli_query($con, $query)) {
         if ($row = mysqli_fetch_array($result)) {
-            $hashedPass = crypt($userPass, $row['salt']);
-            if ($hashedPass == $row['pass']) {
+            if (password_verify($userPass, $row['pass'])) {
                 $_SESSION['authenticated'] = true;
                 $_SESSION['user'] = $row['user'];
                 $_SESSION['role'] = $row['role'];
