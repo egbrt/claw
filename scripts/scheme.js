@@ -24,11 +24,10 @@ export default class Scheme {
                 }
             }
             else if (this.name == "snomed-ct-en") {
-                //this.url = "https://browser.ihtsdotools.org/?perspective=full&edition=en-edition&release=v20190131&conceptId1=" + this.code;
-                //this.url = "https://localhost/snomed";
-                this.url = "https://snomed.icpc-3.info";
+                this.url = "https://browser.ihtsdotools.org/?perspective=full&edition=en-edition&release=v20190131&conceptId1=" + this.code;
+                //this.url = "https://snomed.icpc-3.info";
                 this.isKnownScheme = true;
-                this.isOtherClaW = true;
+                this.isOtherClaW = false;
                 this.msecs2Wait1Time = 1000;
             }
             else if (this.name == "ichi") {

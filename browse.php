@@ -557,7 +557,7 @@ function removeClass($db, $parent, $class)
 
     // does parent have any children left?
     if (!$db->nodes->selectChildren($parent)) {
-        setClassHasChildren($db, $parent, false);
+        $db->nodes->setHasChildren($parent, false);
     }
 }
 
